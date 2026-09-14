@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nithyasri S | Web Developer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0F141B;
+    --surface: #171F29;
+    --surface-2: #1E2833;
+    --line: #2A3542;
+    --text: #E7ECF2;
+    --muted: #8B97A6;
+    --blue: #5B8DEF;
+    --amber: #F2A65A;
+    --green: #6FCF97;
+    --pink: #E97C9E;
+    --radius: 10px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection{ background: var(--blue); color: #0F141B; }
+
+  h1,h2,h3{ font-family:'Sora', sans-serif; margin: 0; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  a{ color: inherit; }
+
+  .wrap{ max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(15,20,27,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 64px;
+  }
+  .logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 16px; font-weight: 600;
+    color: var(--text);
+  }
+  .logo span{ color: var(--amber); }
+  .navlinks{ display:flex; gap: 28px; list-style:none; margin:0; padding:0; }
+  .navlinks a{
+    text-decoration:none; color: var(--muted); font-size: 14px; font-weight: 500;
+    transition: color .2s ease;
+  }
+  .navlinks a:hover, .navlinks a:focus-visible{ color: var(--text); }
+  .navlinks a:focus-visible{ outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 4px; }
+
+  /* HERO */
+  .hero{
+    padding: 88px 0 64px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    color: var(--green);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    margin-bottom: 14px;
+    display:flex; align-items:center; gap: 8px;
+  }
+  .eyebrow::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background: var(--green); display:inline-block;
+    box-shadow: 0 0 0 3px rgba(111,207,151,0.18);
+  }
+  .hero h1{
+    font-size: clamp(32px, 5vw, 46px);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 .accent{ color: var(--blue); }
+  .hero p.lede{
+    color: var(--muted);
+    font-size: 16.5px;
+    margin-top: 18px;
+    max-width: 46ch;
+  }
+  .hero-cta{ display:flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
+  .btn{
+    font-family:'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    padding: 12px 22px;
+    border-radius: 8px;
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-primary{ background: var(--blue); color: #081018; }
+  .btn-primary:hover{ transform: translateY(-2px); background:#6f9bf2; }
+  .btn-ghost{ border: 1px solid var(--line); color: var(--text); }
+  .btn-ghost:hover{ border-color: var(--blue); transform: translateY(-2px); }
+  .btn:focus-visible{ outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  /* CODE EDITOR SIGNATURE */
+  .editor{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .editor-tabs{
+    display:flex; align-items:center; gap: 8px;
+    padding: 12px 14px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .dot{ width:10px; height:10px; border-radius:50%; }
+  .dot.red{ background:#E9636B; }
+  .dot.yellow{ background:#F2C46A; }
+  .dot.green{ background:#6FCF97; }
+  .filename{
+    margin-left: 10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .editor-body{
+    padding: 22px 20px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.85;
+    overflow-x: auto;
+  }
+  .ln{ color: #4A5665; user-select: none; display:inline-block; width: 22px; }
+  .kw{ color: var(--pink); }
+  .str{ color: var(--green); }
+  .key{ color: var(--blue); }
+  .com{ color: #5A6577; }
+  .cursor{
+    display:inline-block; width: 7px; height: 15px;
+    background: var(--amber);
+    margin-left: 2px; vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  /* SECTIONS */
+  section{ padding: 72px 0; border-top: 1px solid var(--line); }
+  .section-head{ margin-bottom: 36px; }
+  .section-tag{
+    font-family:'JetBrains Mono', monospace;
+    color: var(--amber);
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .section-head h2{ font-size: clamp(24px, 3vw, 30px); }
+
+  /* ABOUT */
+  .about-text{ color: var(--muted); max-width: 62ch; font-size: 15.5px; }
+  .about-text strong{ color: var(--text); font-weight: 600; }
+  .strengths{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+  .chip{
+    font-size: 13px; font-family:'JetBrains Mono', monospace;
+    padding: 7px 14px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--muted);
+  }
+
+  /* SKILLS */
+  .skills-grid{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 14px;
+  }
+  .skill-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+  }
+  .skill-card .name{
+    font-weight: 600; font-size: 14.5px; display:flex; align-items:center; gap:10px;
+  }
+  .skill-card .name::before{
+    content:''; width: 8px; height: 8px; border-radius: 2px; background: var(--blue);
+  }
+  .skill-card:nth-child(2) .name::before{ background: var(--amber); }
+  .skill-card:nth-child(3) .name::before{ background: var(--green); }
+  .skill-card:nth-child(4) .name::before{ background: var(--pink); }
+  .skill-card .bar{
+    margin-top: 12px; height: 5px; background: var(--surface-2);
+    border-radius: 3px; overflow:hidden;
+  }
+  .skill-card .bar span{
+    display:block; height: 100%; background: var(--blue); border-radius: 3px;
+  }
+  .skill-card:nth-child(2) .bar span{ background: var(--amber); }
+  .skill-card:nth-child(3) .bar span{ background: var(--green); }
+  .skill-card:nth-child(4) .bar span{ background: var(--pink); }
+
+  /* PROJECTS */
+  .projects{ display:flex; flex-direction:column; gap: 18px; }
+  .project-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 26px 26px 24px;
+    transition: border-color .2s ease;
+  }
+  .project-card:hover{ border-color: #3A4756; }
+  .project-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap: 16px; flex-wrap: wrap;
+  }
+  .project-top h3{ font-size: 18px; font-weight: 700; }
+  .stack{ display:flex; gap:8px; flex-wrap:wrap; }
+  .stack span{
+    font-family:'JetBrains Mono', monospace; font-size: 11.5px;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--surface-2); color: var(--muted);
+  }
+  .project-card p{ color: var(--muted); font-size: 14.5px; margin-top: 12px; max-width: 68ch; }
+
+  /* TIMELINE (education + internship) */
+  .timeline{ position: relative; padding-left: 26px; }
+  .timeline::before{
+    content:''; position:absolute; left: 5px; top: 6px; bottom: 6px; width: 1px;
+    background: var(--line);
+  }
+  .t-item{ position: relative; padding-bottom: 30px; }
+  .t-item:last-child{ padding-bottom: 0; }
+  .t-item::before{
+    content:''; position:absolute; left: -26px; top: 4px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--blue);
+  }
+  .t-date{
+    font-family:'JetBrains Mono', monospace; font-size: 12px; color: var(--amber);
+  }
+  .t-item h3{ font-size: 15.5px; margin-top: 4px; }
+  .t-item .org{ color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+
+  /* CERTS */
+  .certs{ display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 14px; }
+  .cert{
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 16px 18px; font-size: 14px; background: var(--surface);
+    display:flex; gap: 10px; align-items:flex-start;
+  }
+  .cert::before{ content:'✓'; color: var(--green); font-weight:700; }
+
+  /* CONTACT */
+  .contact-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 40px;
+    text-align:center;
+  }
+  .contact-card h2{ font-size: 26px; }
+  .contact-card p{ color: var(--muted); margin-top: 10px; }
+  .contact-links{
+    display:flex; gap: 14px; justify-content:center; margin-top: 26px; flex-wrap: wrap;
+  }
+
+  footer{
+    text-align:center; padding: 30px 0 40px; color: var(--muted); font-size: 13px;
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  @media (max-width: 820px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .navlinks{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cursor{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">Nithyasri<span> S</span></div>
+    <ul class="navlinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">OPEN TO NEW OPPORTUNITIES</div>
+      <h1>Hi, I'm Nithyasri — <span class="accent">I build things for the web.</span></h1>
+      <p class="lede">I recently completed my MCA at Anna University, and along the way I've picked up HTML, CSS, JavaScript and Java by actually building projects — an Android app, a CRUD system, and a live client project during my internship.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">View Projects</a>
+        <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="editor">
+      <div class="editor-tabs">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="filename">profile.js</span>
+      </div>
+      <div class="editor-body">
+<div><span class="ln">1</span><span class="kw">const</span> <span class="key">developer</span> = {</div>
+<div><span class="ln">2</span>&nbsp;&nbsp;name: <span class="str">"Nithyasri S"</span>,</div>
+<div><span class="ln">3</span>&nbsp;&nbsp;role: <span class="str">"Web Developer"</span>,</div>
+<div><span class="ln">4</span>&nbsp;&nbsp;based: <span class="str">"Rajapalayam, IN"</span>,</div>
+<div><span class="ln">5</span>&nbsp;&nbsp;skills: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>,</div>
+<div><span class="ln">6</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"JavaScript"</span>, <span class="str">"Java"</span>],</div>
+<div><span class="ln">7</span>&nbsp;&nbsp;<span class="com">// always learning</span></div>
+<div><span class="ln">8</span>&nbsp;&nbsp;status: <span class="str">"looking for my first role"</span><span class="cursor"></span></div>
+<div><span class="ln">9</span>};</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">01 · ABOUT</div>
+      <h2>Who I am</h2>
+    </div>
+    <p class="about-text">
+      I'm a web developer with hands-on experience in <strong>HTML, CSS, and JavaScript</strong>, having recently completed my MCA at Anna University. I learn best by building — my projects include an Android app, a full CRUD system, and a 3-month internship where I contributed to a live client project. I'm adaptable, work well in a team, and I'm always looking to pick up new skills.
+    </p>
+    <div class="strengths">
+      <span class="chip">Adaptability</span>
+      <span class="chip">Teamwork</span>
+      <span class="chip">Willingness to Learn</span>
+      <span class="chip">English &amp; Tamil</span>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">02 · SKILLS</div>
+      <h2>What I work with</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="name">HTML</div>
+        <div class="bar"><span style="width:88%"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="name">CSS</div>
+        <div class="bar"><span style="width:82%"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="name">JavaScript</div>
+        <div class="bar"><span style="width:75%"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="name">Java</div>
+        <div class="bar"><span style="width:70%"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">03 · PROJECTS</div>
+      <h2>Things I've built</h2>
+    </div>
+    <div class="projects">
+      <div class="project-card">
+        <div class="project-top">
+          <h3>JGames — Kids Welfare Gaming App</h3>
+          <div class="stack">
+            <span>Android Studio</span><span>Java</span><span>SQLite</span>
+          </div>
+        </div>
+        <p>An Android app for kids with two mini games — coloring and snake. Built it using Android Studio with a SQLite database to save game progress. First time I worked with mobile app development, not just web.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <h3>CRUD Operations App</h3>
+          <div class="stack">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>MySQL</span>
+          </div>
+        </div>
+        <p>A working Create-Read-Update-Delete system connected to a MySQL database, built with plain HTML, CSS and JavaScript — no frameworks. Handles adding, editing, viewing and deleting records.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">04 · EXPERIENCE</div>
+      <h2>Internship</h2>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-date">2023 · 3 MONTHS</div>
+        <h3>Sanyu Infotech</h3>
+        <div class="org">Worked on a live project for Malar Hospital using HTML, CSS &amp; JavaScript.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">05 · EDUCATION</div>
+      <h2>Academic Background</h2>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-date">2024 – 2026</div>
+        <h3>Master of Computer Application</h3>
+        <div class="org">Sri Venkateswara College of Computer Applications and Management, Anna University — Coimbatore</div>
+      </div>
+      <div class="t-item">
+        <div class="t-date">2020 – 2023</div>
+        <h3>B.Sc Computer Science</h3>
+        <div class="org">Standard Fireworks Rajaratnam College for Women, Madurai Kamaraj University — Sivakasi</div>
+      </div>
+      <div class="t-item">
+        <div class="t-date">2019 – 2020</div>
+        <h3>Higher Secondary School — 75%</h3>
+        <div class="org">Kamma Mahajana Trust Girls Hr. Sec. School — Sattur</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">06 · CERTIFICATES</div>
+      <h2>Certifications</h2>
+    </div>
+    <div class="certs">
+      <div class="cert">NCC — 'C' Certificate</div>
+      <div class="cert">Web Designing Full Stack Development</div>
+      <div class="cert">Diploma in Programming Language</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-card">
+      <h2>Let's talk</h2>
+      <p>Looking for a web development role — happy to work from office or remote. Feel free to reach out.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:nagajothinithya@gmail.com">Email Me</a>
+        <a class="btn btn-ghost" href="tel:+919360588519">+91 93605 88519</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/nithyasri-s-065127300" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">// built by Nithyasri S — Rajapalayam, India</div>
+</footer>
+
+</body>
+</html>
